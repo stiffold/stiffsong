@@ -70,6 +70,10 @@ export class SongServiceService {
     return this.http.get<string>(`${this.apiUrl}songImage/${songId}`, this.httpOptions);
   }
 
+  rotateImageBySongId(songId: number): Observable<string>{
+    return this.http.get<string>(`${this.apiUrl}rotateToRight/${songId}`, this.httpOptions);
+  }
+
   deleteImageBySongId(songId: number){
     return this.http.delete(`${this.apiUrl}songImage/${songId}`, this.httpOptions);
   }

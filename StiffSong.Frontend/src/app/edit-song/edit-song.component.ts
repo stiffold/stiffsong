@@ -80,4 +80,11 @@ export class EditSongComponent implements OnInit {
     })
   }
 
+  rotateImage(){
+    this.songService.rotateImageBySongId(this.id).subscribe(x => {
+      this.songService.openSnackBar("Image rotated");
+      location.reload();
+    })
+  }
+
 }

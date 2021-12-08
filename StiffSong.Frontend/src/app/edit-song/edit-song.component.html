@@ -28,6 +28,7 @@
     <mat-card-subtitle>Chords Image</mat-card-subtitle>
     <div fxLayout="row">
       <button fxFlex mat-raised-button (click)="fileInput.click()">Choose image</button>
+      <button fxFlex="20%" mat-raised-button [disabled]="!previewImage" (click)="rotateImage()">Rotate image</button>
       <button fxFlex mat-raised-button color="warn" [disabled]="!previewImage" (click)="deleteImage()">Delete image</button>
       <input hidden #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
     </div>

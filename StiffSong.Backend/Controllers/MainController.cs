@@ -182,5 +182,29 @@ namespace StiffSonngBackend.Controllers
                 }
             }
         }
+
+        [HttpGet("rotateToRight/{songId}")]
+        public async Task<int> RotateImage(int songId)
+        {
+                using (var db = new ImagesContext())
+                {
+                    var loadedImage = db.Images.SingleOrDefault(x => x.RelatedSongId == songId);
+
+                    if (loadedImage != null)
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            var img = SixLabors.ImageSharp.Image.Load(loadedImage.ImageData);
+                            img.Mutate(x => x.Rotate(RotateMode.Rotate90));
+                            await img.SaveAsPngAsync(ms);
+                            loadedImage.ImageData = ms.ToArray();
+                            loadedImage.LastUsed = DateTime.Now;
+                            await db.SaveChangesAsync();
+                        }
+                    }
+                }
+
+                return songId;
+        }
     }
 }
