@@ -40,4 +40,3 @@ jobs:
         password: '${{ secrets.FTP_PASSWORD }}'
         local-dir: ./StiffSong.Frontend/dist/stiffsong/
         server-dir: ./stiff.cz/WWWRoot/wwwroot/
-        dangerous-clean-slate: true
