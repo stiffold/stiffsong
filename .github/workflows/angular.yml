@@ -5,7 +5,7 @@ on:
     branches: 
       - master
     paths:
-      - './StiffSong.Frontend/*'
+      - './StiffSong.Frontend/**'
       
 jobs:
   web-deploy:
