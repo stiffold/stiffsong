@@ -5,8 +5,8 @@ on:
     branches: 
       - master
     paths:
-      - './StiffSong.Frontend/**'
-      - './.github/workflows/angular.yml'
+      - 'StiffSong.Frontend/**'
+      - '.github/workflows/angular.yml'
       
 jobs:
   web-deploy:
