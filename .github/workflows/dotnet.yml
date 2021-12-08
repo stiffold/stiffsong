@@ -2,14 +2,17 @@ name: .NET
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: 
+      - master
+    paths:
+      - 'StiffSong.Backend/**'
+      - '.github/workflows/dotnet.yml'
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: prod
 
     steps:
     - uses: actions/checkout@v2
@@ -23,3 +26,17 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Publish
+      run: dotnet publish StiffSong.sln --configuration Release --output ./Release
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        # Deployment destination server & path. Formatted as protocol://domain.com:port/full/destination/path/
+        server: '${{ secrets.FTP_URL }}'
+        # FTP account username
+        username: '${{ secrets.FTP_USER }}'
+        # FTP account password
+        password: '${{ secrets.FTP_PASSWORD }}'
+        # The local folder to copy, defaults to root project folder
+        local-dir: Release/
+        server-dir: stiff.cz/WWWRoot/
