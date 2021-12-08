@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using StiffSonngBackend.Database;
 using StiffSonngBackend.Models;
+using Image = StiffSonngBackend.Database.Image;
 
 namespace StiffSonngBackend.Controllers
 {
@@ -145,11 +146,10 @@ namespace StiffSonngBackend.Controllers
 
                     using (var ms = new MemoryStream())
                     {
-                        await file.CopyToAsync(ms);
-                        var fileBytes = ms.ToArray();
-                        string s = Convert.ToBase64String(fileBytes);
-                        // act on the Base64 data
-                        loadedImage.ImageData = fileBytes;
+                        var img = await SixLabors.ImageSharp.Image.LoadAsync(file.OpenReadStream());
+                        img.Mutate(x => x.Resize(0, 1000));
+                        await img.SaveAsPngAsync(ms);
+                        loadedImage.ImageData = ms.ToArray();
                         loadedImage.LastUsed = DateTime.Now;
                         await db.SaveChangesAsync();
                     }
