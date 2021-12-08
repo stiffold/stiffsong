@@ -8,7 +8,7 @@ namespace StiffSonngBackend.Database
         public static string ProdConnectionString =
             @"Server=blue.globenet.cz;Database=d003739;User Id=d003739a;Password=snaxfr5jNE;";
 
-        public static string ConnectionString => LocalConnectionString;
+        public static string ConnectionString => ProdConnectionString;
 
     }
 }
