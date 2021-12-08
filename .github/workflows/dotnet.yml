@@ -5,7 +5,7 @@ on:
     branches: 
       - master
     paths:
-      - './StiffSong.Backend/*'
+      - './StiffSong.Backend/**'
 
 jobs:
   build:
