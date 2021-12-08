@@ -31,9 +31,9 @@ jobs:
     - name: Sync Files      
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
-        server: ${{ secrets.FTP_URL }}
-        username: ${{ secrets.FTP_USER }}
-        password: ${{ secrets.FTP_PASSWORD }}
+        server: '${{ secrets.FTP_URL }}'
+        username: '${{ secrets.FTP_USER }}'
+        password: '${{ secrets.FTP_PASSWORD }}'
         local-dir: ./StiffSong.Frontend/dist/
         server-dir: ./stiff.cz/WWWRoot/wwwroot/
         dangerous-clean-slate: true
