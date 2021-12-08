@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
+        <AssemblyName>StiffSong</AssemblyName>
+        <RootNamespace>StiffSong</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

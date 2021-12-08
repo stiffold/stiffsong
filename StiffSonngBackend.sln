@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StiffSonngBackend", "StiffSonngBackend\StiffSonngBackend.csproj", "{A96E7E5A-2797-4881-B187-AE8C86EB0D96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StiffSong", "StiffSong\StiffSong.csproj", "{A96E7E5A-2797-4881-B187-AE8C86EB0D96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
