@@ -1,0 +1,27 @@
+
+<mat-toolbar>
+  <mat-toolbar-row><mat-icon>save</mat-icon> Sort & generate</mat-toolbar-row>
+</mat-toolbar>
+
+<mat-spinner class="loading-indicator" *ngIf="saving"></mat-spinner>
+
+<div *ngIf="!saving" cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <div class="example-box" *ngFor="let s of songService.chosen" cdkDrag>{{s.title}}
+    <button mat-mini-fab color="warn" (click)="remove(s)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+<div *ngIf="!saving" fxLayout="row">
+  <button fxFlex mat-raised-button (click)="savePresentation()" color="accent">
+    <mat-icon>save</mat-icon>
+    Save presentation
+  </button>
+</div>
+<div *ngIf="!saving" fxLayout="row">
+  <button fxFlex mat-raised-button (click)="savePdf()" color="primary">
+    <mat-icon>save</mat-icon>
+    Save chords PDF
+  </button>
+</div>
+

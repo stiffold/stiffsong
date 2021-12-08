@@ -1,0 +1,34 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <mat-icon>settings</mat-icon>
+    Presentation settings
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-tab-group>
+  <mat-tab label="Static images">
+    <div fxLayout="row wrap">
+      <mat-card fxFlex.gt-md="300px" fxFlex.lt-lg="50" *ngFor="let image of images" [ngStyle]="{'background-color': getActiveImage(image)}"
+                (click)="chooseImage(image)">
+        <button color="primary" style="position: absolute" *ngIf="getImageIndex(image) !== -1" mat-mini-fab>{{getImageIndex(image) + 1}}</button>
+        <img height="100%" width="100%" alt="{{image}}" src="{{image}}">
+      </mat-card>
+    </div>
+  </mat-tab>
+  <mat-tab label="Colors">
+    <div fxLayout="row wrap">
+      <mat-card *ngFor="let color of colors" fxFlex.gt-md="300px" fxFlex.lt-lg="50" [ngStyle]="{'background-color': getActiveColor(color)}">
+        <button [disabled]="color.id == songService.choosedColor.id" mat-raised-button (click)="choose(color)">Choose
+        </button>
+        <button mat-raised-button (click)="preview(color)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <div style="height: 30px; width: 100%;" [ngStyle]="{'background-color': getColor(color.code,1)}"></div>
+        <div style="height: 30px; width: 100%;" [ngStyle]="{'background-color': getColor(color.code,3)}"></div>
+        <div style="height: 30px; width: 100%;" [ngStyle]="{'background-color': getColor(color.code,4)}"></div>
+      </mat-card>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>
+
+

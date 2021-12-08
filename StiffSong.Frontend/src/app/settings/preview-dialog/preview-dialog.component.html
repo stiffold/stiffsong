@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Preview</h1>
+<div mat-dialog-content>
+  <div style="height: 30px; width: 100%;" [ngStyle]="{'background-color': getColor(data.code,1)}">
+    <span style="font-weight: bold; padding-left: 10px; padding-top: 5px;" [ngStyle]="{'color': getColor(data.code,4)}">Title of song</span>
+  </div>
+  <div style="height: 170px; width: 100%; line-height: 170px; text-align: center;" [ngStyle]="{'background-color': getColor(data.code,3)}">
+    <span style="font-size: 1.2em;" [ngStyle]="{'color': getColor(data.code,4)}">Lyrics song text hahaha hohoho hihihi</span>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

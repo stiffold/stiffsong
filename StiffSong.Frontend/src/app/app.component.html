@@ -1,0 +1,23 @@
+<mat-toolbar class="fixed-header">
+  <mat-toolbar-row>
+    <span>Songs</span><mat-icon>queue_music</mat-icon>
+    <span fxFlex></span>
+    <button mat-mini-fab color="primary" routerLink="create">
+      <mat-icon>add</mat-icon>
+    </button>
+    <span fxFlex></span>
+    <button mat-mini-fab routerLink="browser">
+      <mat-icon>search</mat-icon>
+    </button>
+    <span fxFlex></span>
+    <button mat-mini-fab color="primary" routerLink="settings">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <button [disabled]="songService.chosen.length == 0" mat-mini-fab color="primary" [matBadgeHidden]="songService.chosen.length == 0" matBadge="{{songService.chosen.length}}"
+            matBadgeColor="accent"
+            routerLink="creator">
+      <mat-icon>list</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>

@@ -1,0 +1,17 @@
+<mat-card style="height: 90%">
+  <mat-card-title>Create song</mat-card-title>
+  <div fxLayout="row">
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Title" [formControl]="title" required>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row">
+    <mat-form-field fxFlex>
+      <textarea matInput style="min-height: 30em" placeholder="Lyrics" [formControl]="lyrics" required></textarea>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row">
+  <button fxFlex mat-raised-button color="accent" [disabled]="lyrics.invalid || title.invalid" (click)="save()"><mat-icon  style="height: 1em; width: 1em;">save</mat-icon></button>
+  </div>
+</mat-card>
+
