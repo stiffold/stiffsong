@@ -147,7 +147,7 @@ namespace StiffSonngBackend.Controllers
                     using (var ms = new MemoryStream())
                     {
                         var img = await SixLabors.ImageSharp.Image.LoadAsync(file.OpenReadStream());
-                        img.Mutate(x => x.Resize(0, 1000));
+                        img.Mutate(x => x.AutoOrient().Resize(0, 1000));
                         await img.SaveAsPngAsync(ms);
                         loadedImage.ImageData = ms.ToArray();
                         loadedImage.LastUsed = DateTime.Now;
