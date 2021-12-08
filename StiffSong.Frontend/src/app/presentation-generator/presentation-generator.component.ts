@@ -192,7 +192,7 @@ export class PresentationGeneratorComponent implements OnInit {
       if (s.chordsText) {
         doc.text(s.chordsText, 10, 30);
       } else if (image) {
-        doc.addImage(image.image, 'PNG', 0, 8, 210, 290, s.title, 'NONE', 0);
+        doc.addImage(image.image, 'PNG', 0, 8, 210, 290, s.title, 'NONE', 90);
       }else{
         doc.text(`Please fill chords - nothing here for ${s.title}`, 10, 30);
       }
@@ -202,6 +202,6 @@ export class PresentationGeneratorComponent implements OnInit {
       doc.setFontSize(20);
 
     }
-    doc.save('tableToPdf.pdf');
+    doc.save(`Songs-${new Date().toISOString().slice(0, 10)}.pdf`);
   }
 }
