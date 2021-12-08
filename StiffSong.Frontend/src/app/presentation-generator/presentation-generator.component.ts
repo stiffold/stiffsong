@@ -192,7 +192,7 @@ export class PresentationGeneratorComponent implements OnInit {
       if (s.chordsText) {
         doc.text(s.chordsText, 10, 30);
       } else if (image) {
-        doc.addImage(image.image, 'PNG', 0, 8, 210, 290, s.title, 'NONE', 90);
+        doc.addImage(image.image, 'PNG', 0, 8, 210, 290, s.title, 'NONE', 0);
       }else{
         doc.text(`Please fill chords - nothing here for ${s.title}`, 10, 30);
       }
