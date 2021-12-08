@@ -2,11 +2,10 @@ name: .NET
 
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - master
     paths:
-    - './StiffSong.Backend/*'
-  pull_request:
-    branches: [ master ]
+      - './StiffSong.Backend/*'
 
 jobs:
   build:
@@ -27,7 +26,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish StiffSong.sln --configuration Release --framework netcoreapp2.1 --output ./Release --runtime win-x86  --self-contained true -p:PublishTrimmed=true -p:PublishSingleFile=true
+      run: dotnet publish StiffSong.sln --configuration Release --output ./Release --runtime win-x86  --self-contained true -p:PublishTrimmed=true -p:PublishSingleFile=true
     - name: FTP Deploy
       uses: SamKirkland/FTP-Deploy-Action@3.0.0
       with:
