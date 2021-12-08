@@ -32,11 +32,11 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
         # Deployment destination server & path. Formatted as protocol://domain.com:port/full/destination/path/
-        ftp-server: ${{ secrets.FTP_URL }}
+        ftp-server: '${{ secrets.FTP_URL }}'
         # FTP account username
-        ftp-username: ${{ secrets.FTP_USER }}
+        ftp-username: '${{ secrets.FTP_USER }}'
         # FTP account password
-        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        ftp-password: '${{ secrets.FTP_PASSWORD }}'
         # The local folder to copy, defaults to root project folder
         local-dir: ./Release
         server-dir: stiff.cz/WWWRoot/
