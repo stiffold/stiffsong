@@ -4,6 +4,8 @@ on:
   push:
     branches: 
       - master
+    paths:
+      - './StiffSong.Frontend/*'
       
 jobs:
   web-deploy:
@@ -35,6 +37,6 @@ jobs:
         server: '${{ secrets.FTP_URL }}'
         username: '${{ secrets.FTP_USER }}'
         password: '${{ secrets.FTP_PASSWORD }}'
-        local-dir: ./StiffSong.Frontend/dist/
+        local-dir: ./StiffSong.Frontend/dist/stiffsong/
         server-dir: ./stiff.cz/WWWRoot/wwwroot/
         dangerous-clean-slate: true
