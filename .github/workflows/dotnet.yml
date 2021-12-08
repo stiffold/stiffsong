@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - './StiffSong.Backend/**'
+      - './.github/workflows/dotnet.yml'
 
 jobs:
   build:
