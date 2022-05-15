@@ -10,7 +10,7 @@ import {map} from "rxjs/operators";
 export class SongServiceService {
   chosen = [];
   chosenChordImages = [];
-  apiUrl = 'http://stiff.cz/';
+  apiUrl = 'https://stiff.cz/';
   //apiUrl = 'http://localhost:5001/';
 
   httpOptions = {
