@@ -80,4 +80,22 @@ export class NewSettingsComponent implements OnInit {
   getImageUrl(imageId: number) {
      return `${this.songService.apiUrl}ImagePreview/${imageId}`
   }
+
+  deleteImage(image) {
+    this.songService.deleteImageById(image).subscribe(s => {
+      const index = this.images.indexOf(image);
+      if (index > -1) {
+        this.images.splice(index, 1);
+      }
+
+      let choosen = this.songService.choosedImages.indexOf(image);
+      if (choosen > -1) {
+        this.songService.choosedImages.splice(choosen, 1);
+        if (this.songService.choosedImages.length === 0){
+          this.songService.isImage = false;
+        }
+      }
+      this.songService.openSnackBar("Image deleted");
+    });
+  }
 }
