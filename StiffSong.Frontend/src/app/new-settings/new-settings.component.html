@@ -1,0 +1,24 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <mat-icon>settings</mat-icon>
+    Presentation settings
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-tab-group>
+  <mat-tab label="Static images">
+    <div fxLayout="row">
+      <button fxFlex mat-raised-button (click)="fileInput.click()">Upload image</button>
+<!--      <button fxFlex mat-raised-button color="warn" [disabled]="!previewImage" (click)="deleteImage()">Delete image</button>-->
+      <input hidden #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
+    </div>
+    <div fxLayout="row wrap">
+      <mat-card fxFlex.gt-md="300px" fxFlex.lt-lg="50" *ngFor="let image of images" [ngStyle]="{'background-color': getActiveImage(image)}"
+                (click)="chooseImage(image)">
+        <button color="primary" style="position: absolute" *ngIf="getImageIndex(image) !== -1" mat-mini-fab>{{getImageIndex(image) + 1}}</button>
+        <img height="200px" width="300px" alt="{{image}}" src="{{getImageUrl(image)}}">
+      </mat-card>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+

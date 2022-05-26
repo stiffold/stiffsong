@@ -21,6 +21,8 @@ namespace StiffSonngBackend.Database
         [Column(TypeName = "nvarchar(20)")]
         public ImageType ImageType { get; set; }
         public byte[] ImageData { get; set; }
+
+        public byte[] PreviewImageData { get; set; }
         public long RelatedSongId { get; set; }
         public DateTime? LastUsed { get; set; }
     }

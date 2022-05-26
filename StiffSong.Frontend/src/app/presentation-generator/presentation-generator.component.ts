@@ -53,7 +53,7 @@ export class PresentationGeneratorComponent implements OnInit {
       for (let image of this.songService.choosedImages) {
         pptx.defineSlideMaster({
           title: image,
-          bkgd: {path: image.replace('thumb-', '')},
+          bkgd: { data: `image/png;base64,${this.songService.preloadedImages.find(x => x.id == image).data}`},
           objects: [],
           slideNumber: {x: 0.3, y: '92%', color: 'FFFFFF'}
         });

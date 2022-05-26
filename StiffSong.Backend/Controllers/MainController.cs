@@ -169,12 +169,75 @@ namespace StiffSonngBackend.Controllers
             }
         }
 
+        [HttpGet("Image/{imageId}")]
+        public string GetImage(int imageId)
+        {
+            using (var db = new ImagesContext())
+            {
+                var imageDate = db.Images.Where(x => x.Id == imageId).Select(x => x.ImageData).SingleOrDefault();
+                return imageDate != null ? Convert.ToBase64String(imageDate) : null;
+            }
+        }
+
+        [HttpGet("ImagePreview/{imageId}")]
+        public async Task<IActionResult> GetImagePreview(int imageId)
+        {
+            using (var db = new ImagesContext())
+            {
+                var image = db.Images.SingleOrDefault(x => x.Id == imageId);
+                if (image != null)
+                {
+                    if (image.PreviewImageData != null)
+                    {
+                        return File(image.PreviewImageData, "image/png");
+                    }
+
+                    using (var msPreview = new MemoryStream())
+                    {
+                        var img = SixLabors.ImageSharp.Image.Load(image.ImageData);
+                        img.Mutate(x => x.AutoOrient().Resize(300,0));
+                        await img.SaveAsPngAsync(msPreview);
+                        image.PreviewImageData = msPreview.ToArray();
+                        await db.SaveChangesAsync();
+
+                        return File(image.PreviewImageData, "image/png");
+                    }
+
+                }
+
+                return null;
+            }
+        }
+
+        [HttpGet("backgroundimages")]
+        public long[] GetBackgroundImages()
+        {
+            using (var db = new ImagesContext())
+            {
+                return db.Images.Where(x => x.ImageType == ImageType.Background).Select(x => x.Id).ToArray();
+            }
+        }
+
         [HttpDelete("songImage/{songId}")]
         public void DeleteSongImage(int songId)
         {
             using (var db = new ImagesContext())
             {
                 var image = db.Images.SingleOrDefault(x => x.RelatedSongId == songId);
+                if (image != null)
+                {
+                    db.Images.Remove(image);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        [HttpDelete("Image/{imageId}")]
+        public void DeleteImage(int imageId)
+        {
+            using (var db = new ImagesContext())
+            {
+                var image = db.Images.SingleOrDefault(x => x.Id == imageId);
                 if (image != null)
                 {
                     db.Images.Remove(image);
@@ -205,6 +268,46 @@ namespace StiffSonngBackend.Controllers
                 }
 
                 return songId;
+        }
+
+        [HttpPost("addBackgroundImage/{imageId}")]
+        public async Task<long?> AddBackgroundImage([FromForm(Name = "file")] IFormFile file, long? imageId)
+        {
+            if (file.Length > 0)
+            {
+                using (var db = new ImagesContext())
+                {
+                    var loadedImage = db.Images.SingleOrDefault(x => x.Id == imageId);
+
+                    if (loadedImage == null)
+                    {
+                        loadedImage = new Image { ImageType = ImageType.Background };
+                        db.Images.Add(loadedImage);
+                    }
+
+                    using (var ms = new MemoryStream())
+                    {
+                        var img = await SixLabors.ImageSharp.Image.LoadAsync(file.OpenReadStream());
+                        img.Mutate(x => x.AutoOrient().Resize(2000,0));
+                        await img.SaveAsPngAsync(ms);
+                        loadedImage.ImageData = ms.ToArray();
+                    }
+
+                    using (var msPreview = new MemoryStream())
+                    {
+                        var img = await SixLabors.ImageSharp.Image.LoadAsync(file.OpenReadStream());
+                        img.Mutate(x => x.AutoOrient().Resize(300,0));
+                        await img.SaveAsPngAsync(msPreview);
+                        loadedImage.PreviewImageData = msPreview.ToArray();
+                    }
+
+                    loadedImage.LastUsed = DateTime.Now;
+                    await db.SaveChangesAsync();
+                    imageId = loadedImage.Id;
+                }
+            }
+
+            return imageId;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace StiffSonngBackend
     {
         private readonly RequestDelegate _next;
         private readonly List<string> allowedFiles = new List<string>{".js", ".html", ".ico", ".css", ".jpg"};
-        
+
 
         public HeaderValidatorMiddleware(RequestDelegate next)
         {
@@ -19,11 +19,11 @@ namespace StiffSonngBackend
 
         public async Task Invoke(HttpContext context)
         {
-            if (MustValidate(context.Request.Path.Value))
+            if (MustValidate(context.Request.Path.Value) && !context.Request.Path.Value.Contains("Image"))
             {
                 if (!context.Request.Headers.Keys.Contains("user-key"))
                 {
-                    context.Response.StatusCode = 400; //Bad Request                
+                    context.Response.StatusCode = 400; //Bad Request
                     await context.Response.WriteAsync("User Key is missing");
                     return;
                 }
@@ -35,8 +35,8 @@ namespace StiffSonngBackend
                     return;
                 }
             }
-            
-            await _next.Invoke(context);  
+
+            await _next.Invoke(context);
         }
 
         private bool MustValidate(string pathValue)
