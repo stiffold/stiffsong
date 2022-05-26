@@ -33,7 +33,7 @@ export class NewSettingsComponent implements OnInit {
 
   getActiveImage(image){
     if (this.songService.choosedImages.some(x => x === image)){
-      return '#ff4081';
+      return '#ffd740';
     }
     return 'white';
   }
