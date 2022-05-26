@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {SongServiceService} from "../song-service.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, Validators} from "@angular/forms";
+import {Font} from "../presentation-generator/font";
+import jsPDF from 'jspdf'
 
 @Component({
   selector: 'app-edit-song',
@@ -87,4 +89,16 @@ export class EditSongComponent implements OnInit {
     })
   }
 
+  previewPdf() {
+    const doc = new jsPDF();
+    doc.addFileToVFS('Roboto-Regular.ttf', Font);
+    doc.addFont('Roboto-Regular.ttf', 'custom', 'normal');
+    doc.setFont('custom');
+    doc.setFontSize(20);
+    doc.text(this.chordsText.value, 10, 30);
+    doc.setFontSize(30);
+    doc.text(this.title.value, 10, 10);
+    doc.setFontSize(20);
+    doc.save(`Chords-${new Date().toISOString().slice(0, 10)}.pdf`);
+  }
 }

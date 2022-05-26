@@ -202,6 +202,6 @@ export class PresentationGeneratorComponent implements OnInit {
       doc.setFontSize(20);
 
     }
-    doc.save(`Songs-${new Date().toISOString().slice(0, 10)}.pdf`);
+    doc.save(`Chords-${new Date().toISOString().slice(0, 10)}.pdf`);
   }
 }
