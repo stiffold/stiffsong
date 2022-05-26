@@ -66,7 +66,7 @@ export class EditSongComponent implements OnInit {
   }
 
   addImage() {
-    this.songService.addImage(this.id, this.fileToUpload).subscribe(x => {
+    this.songService.addChrondImage(this.id, this.fileToUpload).subscribe(x => {
       this.songService.openSnackBar("Image saved");
       this.router.navigate(['edit/' + x])
     });

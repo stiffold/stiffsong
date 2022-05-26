@@ -17,3 +17,5 @@ create table Images(
                       RelatedSongId bigint null,
                       LastUsed datetime2 null
 )
+
+alter table dbo.Images add PreviewImageData varbinary(max) null;

@@ -45,7 +45,7 @@ export class SongBrowserComponent implements OnInit {
     this.songService.chosen.push(song);
     this.songService.getImageBySongId(song.id).subscribe(x => {
       if (x){
-        this.songService.chosenChordImages.push({id: song.id, image: x}) ;
+        this.songService.chosenChordImages.push({id: song.id, image: "data:image/png;base64," + x}) ;
       }
     });
     this.songService.openSnackBar("Added to list");

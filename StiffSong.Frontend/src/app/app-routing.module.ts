@@ -4,13 +4,13 @@ import {SongBrowserComponent} from "./song-browser/song-browser.component";
 import {PresentationGeneratorComponent} from "./presentation-generator/presentation-generator.component";
 import {SongCreateComponent} from "./song-create/song-create.component";
 import {EditSongComponent} from "./edit-song/edit-song.component";
-import {SettingsComponent} from "./settings/settings.component";
+import {NewSettingsComponent} from "./new-settings/new-settings.component";
 
 const routes: Routes = [
   {path: 'browser', component: SongBrowserComponent},
   {path: 'create', component: SongCreateComponent},
   {path: 'creator', component: PresentationGeneratorComponent},
-  {path: 'settings', component: SettingsComponent},
+  {path: 'settings', component: NewSettingsComponent},
   {path: 'edit/:id', component: EditSongComponent},
   {path: '', redirectTo: '/browser', pathMatch: 'full'},
 ];

@@ -21,6 +21,7 @@ export class SongServiceService {
 
   choosedColor = { id:'1', code:'dddddd000000ffffff000000', date:'09/22/15', likes:'200000' };
   public choosedImages = [];
+  public preloadedImages = [];
   isImage = false;
 
   constructor(private http: HttpClient, public snackBar: MatSnackBar) {
@@ -51,19 +52,46 @@ export class SongServiceService {
     return this.http.post<Array<SongDto>>(`${this.apiUrl}searchSongs`, song, this.httpOptions);
   }
 
-  addImage(id: number, file: File): Observable<Object>{
+  addChrondImage(id: number, file: File): Observable<Object>{
     // create multipart form for file
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
-    const headers = new HttpHeaders()
-      .append('Content-Disposition', 'mulipart/form-data')
-      .append('user-key', 'stiff-song');
+    const headers = SongServiceService.getFileHeaders();
 
     // POST
     return this.http
       .post(`${this.apiUrl}addchordimage/${id}`, formData, {headers: headers})
       .pipe(map(response => response));
+  }
+
+  addBackgroundImage(imageId: number | null, file: File): Observable<Object>{
+
+    let formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    const headers = SongServiceService.getFileHeaders();
+
+    // POST
+    return this.http
+      .post(`${this.apiUrl}addBackgroundImage/${imageId ? imageId : '0'}`, formData, {headers: headers})
+      .pipe(map(response => response));
+  }
+
+  getImageById(imageId: number): Observable<string>{
+    return this.http.get(`${this.apiUrl}Image/${imageId}`, { responseType: 'text' });
+  }
+
+  getImagePreviewById(imageId: number): Observable<string>{
+    return this.http.get<string>(`${this.apiUrl}ImagePreview/${imageId}`, this.httpOptions);
+  }
+
+  getBackgroundImages(): Observable<number[]>{
+    return this.http.get<number[]>(`${this.apiUrl}backgroundimages`, this.httpOptions);
+  }
+
+  deleteImageById(imageId: number){
+    return this.http.delete(`${this.apiUrl}Image/${imageId}`, this.httpOptions);
   }
 
   getImageBySongId(songId: number): Observable<string>{
@@ -98,6 +126,12 @@ export class SongServiceService {
 
   getColor(index: number){
     return  this.choosedColor.code.substring((index * 6) - 6, index * 6);
+  }
+
+  private static getFileHeaders() {
+    return new HttpHeaders()
+      .append('Content-Disposition', 'mulipart/form-data')
+      .append('user-key', 'stiff-song');
   }
 }
 

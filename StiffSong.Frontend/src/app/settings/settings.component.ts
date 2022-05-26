@@ -69,8 +69,6 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-
-
   colors = [
     { id:'1', code:'dddddd000000ffffff000000', date:'09/22/15', likes:'200000' },
     { id:'2763', code:'222831393e4600adb5eeeeee', date:'09/22/15', likes:'17221' },
