@@ -26,6 +26,7 @@
     "file-saver": "^2.0.0",
     "jspdf": "2.4.0",
     "pptxgenjs-angular": "^1.0.0-beta",
+    "reveal.js": "^4.3.1",
     "rxjs": "~6.3.3",
     "sass": "^1.52.1",
     "tslib": "^1.9.0",

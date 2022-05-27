@@ -25,6 +25,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { PreviewDialogComponent } from './settings/preview-dialog/preview-dialog.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import {NewSettingsComponent} from "./new-settings/new-settings.component";
+import { RevealPresenterComponent } from './reveal-presenter/reveal-presenter.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import {NewSettingsComponent} from "./new-settings/new-settings.component";
     EditSongComponent,
     SettingsComponent,
     NewSettingsComponent,
-    PreviewDialogComponent
+    PreviewDialogComponent,
+    RevealPresenterComponent
   ],
   imports: [
     BrowserModule,

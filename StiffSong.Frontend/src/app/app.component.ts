@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {SongServiceService} from "./song-service.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,11 @@ import {SongServiceService} from "./song-service.service";
 })
 export class AppComponent {
   title = 'stiffsong';
-  constructor(public songService: SongServiceService){
+  constructor(public songService: SongServiceService, private router: Router){
 
+  }
+
+  get isPresenter() : boolean{
+    return this.router.url.includes("presenter");
   }
 }

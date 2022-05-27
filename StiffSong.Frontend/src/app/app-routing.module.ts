@@ -5,6 +5,7 @@ import {PresentationGeneratorComponent} from "./presentation-generator/presentat
 import {SongCreateComponent} from "./song-create/song-create.component";
 import {EditSongComponent} from "./edit-song/edit-song.component";
 import {NewSettingsComponent} from "./new-settings/new-settings.component";
+import {RevealPresenterComponent} from "./reveal-presenter/reveal-presenter.component";
 
 const routes: Routes = [
   {path: 'browser', component: SongBrowserComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'creator', component: PresentationGeneratorComponent},
   {path: 'settings', component: NewSettingsComponent},
   {path: 'edit/:id', component: EditSongComponent},
+  {path: 'presenter/:id', component: RevealPresenterComponent},
   {path: '', redirectTo: '/browser', pathMatch: 'full'},
 ];
 

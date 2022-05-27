@@ -35,6 +35,39 @@ namespace StiffSonngBackend.Controllers
             return song;
         }
 
+        [HttpGet("setup/{id}")]
+        public ActionResult<Setup> GetSetup(int id)
+        {
+            Setup setup = null;
+            using (var db = new SetupsContext())
+            {
+                setup = db.Setups.SingleOrDefault(x => x.Id == id);
+            }
+
+            return setup;
+        }
+
+        [HttpPost("setup")]
+        public long CreatSetup([FromBody] NewSetupDto newSetup)
+        {
+            Setup setup;
+            using (var db = new SetupsContext())
+            {
+                setup = new Setup
+                {
+                    Songs = newSetup.Songs,
+                    Images = newSetup.Images,
+                    Videos = newSetup.Videos,
+                    Configuration = newSetup.Configuration,
+                    LastUsed = DateTime.Now
+                };
+                db.Setups.Add(setup);
+                db.SaveChanges();
+            }
+
+            return setup.Id;
+        }
+
         [HttpGet("mark/{id}")]
         public void Mark(int id)
         {
@@ -201,6 +234,25 @@ namespace StiffSonngBackend.Controllers
                         await db.SaveChangesAsync();
 
                         return File(image.PreviewImageData, "image/png");
+                    }
+
+                }
+
+                return null;
+            }
+        }
+
+        [HttpGet("ImagePresenter/{imageId}")]
+        public async Task<IActionResult> GetImagePresenter(int imageId)
+        {
+            using (var db = new ImagesContext())
+            {
+                var image = db.Images.SingleOrDefault(x => x.Id == imageId);
+                if (image != null)
+                {
+                    if (image.ImageData != null)
+                    {
+                        return File(image.ImageData, "image/png");
                     }
 
                 }

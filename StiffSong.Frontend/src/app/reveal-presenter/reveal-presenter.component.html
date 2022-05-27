@@ -1,0 +1,7 @@
+<div class="reveal">
+  <div class="slides">
+    <section *ngFor="let s of songSlides" attr.data-background-image="{{getImageUrl(s.image)}}">
+      <p *ngFor="let line of s.lines">{{line}}</p>
+    </section>
+  </div>
+</div>

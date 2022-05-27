@@ -5,10 +5,11 @@ import {SearchDto} from "./search.dto";
 import {SongDto} from "./song.dto";
 import {MatSnackBar} from "@angular/material";
 import {map} from "rxjs/operators";
+import {SetupDto} from "./setup.dto";
 
 @Injectable()
 export class SongServiceService {
-  chosen = [];
+  chosen: Array<SongDto> = [];
   chosenChordImages = [];
   apiUrl = 'https://stiff.cz/';
   //apiUrl = 'http://localhost:5001/';
@@ -20,7 +21,7 @@ export class SongServiceService {
   };
 
   choosedColor = { id:'1', code:'dddddd000000ffffff000000', date:'09/22/15', likes:'200000' };
-  public choosedImages = [];
+  public choosedImages: Array<number> = [];
   public preloadedImages = [];
   isImage = false;
 
@@ -104,6 +105,14 @@ export class SongServiceService {
 
   deleteImageBySongId(songId: number){
     return this.http.delete(`${this.apiUrl}songImage/${songId}`, this.httpOptions);
+  }
+
+  getSetupById(id: number): Observable<SetupDto>{
+    return this.http.get<SetupDto>(`${this.apiUrl}setup/${id}`, this.httpOptions);
+  }
+
+  createSetup(setup: SetupDto): Observable<number>{
+    return this.http.post<number>(`${this.apiUrl}setup`, setup, this.httpOptions);
   }
 
   openSnackBar(message: string, action: string = null) {

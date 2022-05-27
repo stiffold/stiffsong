@@ -24,4 +24,11 @@
     Save chords PDF
   </button>
 </div>
+<div *ngIf="!saving" fxLayout="row">
+  <button fxFlex mat-raised-button color="primary" (click)="goToPresenter()" >
+    <mat-icon>airplay</mat-icon>
+    Web presentation
+  </button>
+</div>
+
 

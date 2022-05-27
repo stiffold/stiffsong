@@ -4,6 +4,9 @@ import {SongServiceService} from "../song-service.service";
 import * as PptxGenJS from 'pptxgenjs-angular'
 import jsPDF from 'jspdf'
 import {Font} from "./font";
+import {LyricsParser} from "../lyrics-parser";
+import {SetupDto} from "../setup.dto";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-presentation-generator',
@@ -13,7 +16,7 @@ import {Font} from "./font";
 export class PresentationGeneratorComponent implements OnInit {
 
 
-  constructor(public songService: SongServiceService) {
+  constructor(public songService: SongServiceService, private router: Router) {
   }
 
   saving = false;
@@ -63,7 +66,7 @@ export class PresentationGeneratorComponent implements OnInit {
 
     let index = 0;
     for (let s of this.songService.chosen) {
-      let segments = this.splitLyricsText(s.lyrics);
+      let segments = LyricsParser.splitLyricsText(s.lyrics);
 
       let fontSize = 50;
       if (segments.maxLineLenght >= 40) {
@@ -82,7 +85,7 @@ export class PresentationGeneratorComponent implements OnInit {
             index = 0;
             slideName = this.songService.choosedImages[0];
           }
-          this.addImageSlide(pptx, segment, s.title, fontSize, slideName)
+          this.addImageSlide(pptx, segment, s.title, fontSize, slideName.toString())
         }
       }
       this.songService.mark(s.id).subscribe();
@@ -93,39 +96,7 @@ export class PresentationGeneratorComponent implements OnInit {
     });
   }
 
-  splitLyricsText(lyrics: string): { segments: Array<string>, maxLineLenght: number } {
-    let result = [];
-    let arrayOfLines = lyrics.match(/[^\r\n]+/g);
 
-    let maxLineLenght = null;
-    for (let i = 0; i < arrayOfLines.length; i++) {
-      if (maxLineLenght === null || maxLineLenght < arrayOfLines[i].length) {
-        maxLineLenght = arrayOfLines[i].length;
-      }
-    }
-
-    let segment = '';
-    for (let line of arrayOfLines) {
-      let index = arrayOfLines.indexOf(line);
-      if (line.startsWith('[') && !line.startsWith('[:') && !line.startsWith('[ :')) {
-        if (index !== 0) {
-          result.push(segment);
-          segment = '';
-        }
-      } else {
-        if (line && line.trim() != '' && line != '\n') {
-          if (segment === '') {
-            segment = line;
-          } else {
-            segment = `${segment} \n ${line}`;
-          }
-        }
-      }
-    }
-
-    result.push(segment);
-    return {segments: result, maxLineLenght: maxLineLenght};
-  }
 
   private addColorSlide(pptx: any, segment: string, title: string, fontSize: number) {
     const slide = pptx.addNewSlide('MAIN_SLIDE');
@@ -203,5 +174,19 @@ export class PresentationGeneratorComponent implements OnInit {
 
     }
     doc.save(`Chords-${new Date().toISOString().slice(0, 10)}.pdf`);
+  }
+
+  goToPresenter() {
+    //store setup
+    let setupDto = <SetupDto>{
+      songs: this.songService.chosen.map(x => x.id).join(';'),
+      images: this.songService.choosedImages.join(';')
+    };
+    this.songService.createSetup(setupDto).subscribe(setupId => {
+      //route to presenter with that setup
+      const url = this.router.serializeUrl(this.router.createUrlTree([`/presenter/${setupId}`]));
+      window.open(`#/${url}`, '_blank');
+    });
+
   }
 }
