@@ -48,7 +48,7 @@ namespace StiffSonngBackend.Controllers
         }
 
         [HttpPost("setup")]
-        public long CreatSetup([FromBody] NewSetupDto newSetup)
+        public long CreateSetup([FromBody] NewSetupDto newSetup)
         {
             Setup setup;
             using (var db = new SetupsContext())
